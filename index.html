@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>랜덤 JPG 갤러리 (암호 보호)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .gallery a {
+      text-decoration: none;
+    }
+    .gallery img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .gallery img:hover {
+      transform: scale(1.1);
+      border-color: #666;
+    }
+    #login {
+      text-align: center;
+      margin-top: 100px;
+    }
+    #login input {
+      padding: 8px;
+      font-size: 16px;
+    }
+    #login button {
+      padding: 8px 12px;
+      font-size: 16px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 로그인 화면 -->
+  <div id="login">
+    <h2>갤러리에 접속하려면 암호를 입력하세요</h2>
+    <input type="password" id="password" placeholder="암호 입력">
+    <button onclick="checkPassword()">접속</button>
+    <p id="message" style="color:red;"></p>
+  </div>
+
+  <!-- 갤러리 화면 (초기에는 숨김) -->
+  <div id="gallery-container" style="display:none;">
+    <h1>랜덤 JPG 아이콘 갤러리</h1>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <script>
+    // 미리 정의된 암호
+    const correctPassword = "1029";
+
+    // 갤러리 파일 목록 (확장자 .jpg)
+    const files = [
+      "0220.jpg",
+      "0221.jpg"
+
+    ];
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      const message = document.getElementById("message");
+
+      if (input === correctPassword) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("gallery-container").style.display = "block";
+        loadGallery();
+      } else {
+        message.textContent = "암호가 올바르지 않습니다.";
+      }
+    }
+
+    function loadGallery() {
+      const gallery = document.getElementById("gallery");
+      files.forEach(filename => {
+        const imgPath = "images/" + filename;
+
+        const link = document.createElement("a");
+        link.href = imgPath;
+        link.target = "_blank";
+
+        const img = document.createElement("img");
+        img.src = imgPath;
+        img.alt = filename;
+
+        link.appendChild(img);
+        gallery.appendChild(link);
+      });
+    }
+  </script>
+</body>
+</html>
