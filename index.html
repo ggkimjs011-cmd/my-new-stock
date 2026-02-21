@@ -2,24 +2,24 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>JPG 파일명 갤러리</title>
+  <title>PDF 파일명 갤러리</title>
   <style>
     body { font-family: Arial, sans-serif; }
     ul { list-style-type: none; padding: 0; }
     li { margin: 5px 0; cursor: pointer; color: blue; text-decoration: underline; }
-    img { max-width: 500px; margin-top: 20px; display: none; }
+    embed { width: 600px; height: 800px; margin-top: 20px; display: none; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
   <h1>갤러리 파일 목록</h1>
   <ul id="fileList"></ul>
 
-  <!-- 선택한 이미지를 표시할 영역 -->
-  <img id="preview" alt="선택한 이미지">
+  <!-- 선택한 PDF를 표시할 영역 -->
+  <embed id="preview" type="application/pdf">
 
   <script>
-    // 실제 JPG 파일명 배열
-    const files = ["0220.jpg", "0221.jpg"];
+    // 실제 PDF 파일명 배열
+    const files = ["0220.pdf", "2021.pdf"];
 
     const fileList = document.getElementById("fileList");
     const preview = document.getElementById("preview");
@@ -29,8 +29,8 @@
       const li = document.createElement("li");
       li.textContent = file; // 파일명 표시
       li.addEventListener("click", () => {
-        preview.src = "images/" + file; // images 폴더에서 불러오기
-        preview.style.display = "block"; // 현재 창에서 이미지 표시
+        preview.src = "pdfs/" + file; // pdfs 폴더에서 불러오기
+        preview.style.display = "block"; // 현재 페이지에서 PDF 표시
       });
       fileList.appendChild(li);
     });
