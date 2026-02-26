@@ -7,36 +7,59 @@
     body { font-family: Arial, sans-serif; }
     ul { list-style-type: none; padding: 0; }
     li { margin: 5px 0; cursor: pointer; color: blue; text-decoration: underline; }
+    #login { margin-bottom: 20px; }
   </style>
 </head>
 <body>
   <h1>갤러리 파일 목록</h1>
-  <ul id="fileList"></ul>
+
+  <!-- 로그인 영역 -->
+  <div id="login">
+    <input type="password" id="passwordInput" placeholder="비밀번호 입력">
+    <button id="loginBtn">접속</button>
+    <p id="message"></p>
+  </div>
+
+  <!-- 파일 목록 -->
+  <ul id="fileList" style="display:none;"></ul>
 
   <script>
     // 실제 PDF 파일명 배열
-    const files = ["0220.pdf", "0223.pdf","0224.pdf","0225.pdf"];
+    const files = ["0220.pdf", "0223.pdf","0224.pdf","0225.pdf","0226.pdf"];
 
     const fileList = document.getElementById("fileList");
+    const loginBtn = document.getElementById("loginBtn");
+    const passwordInput = document.getElementById("passwordInput");
+    const message = document.getElementById("message");
 
-    // 배열을 돌려서 자동으로 목록 생성
-    files.forEach(file => {
-      const li = document.createElement("li");
-      li.textContent = file; // 파일명 표시
-      li.addEventListener("click", () => {
-        // 다운로드용 링크 생성
-        const link = document.createElement("a");
-        link.href = "pdfs/" + file; // pdfs 폴더에서 불러오기
-        link.download = file;       // 다운로드 파일명 지정
-        document.body.appendChild(link);
-        link.click();               // 자동 클릭 → 다운로드 시작
-        document.body.removeChild(link);
-      });
-      fileList.appendChild(li);
+    // 저장된 암호 (예시: 실제 서비스에서는 이렇게 하면 안 됨!)
+    const correctPassword = "1029";
+
+    // 로그인 버튼 클릭 시
+    loginBtn.addEventListener("click", () => {
+      if (passwordInput.value === correctPassword) {
+        message.textContent = "접속 성공!";
+        document.getElementById("login").style.display = "none";
+        fileList.style.display = "block";
+
+        // 파일 목록 생성
+        files.forEach(file => {
+          const li = document.createElement("li");
+          li.textContent = file;
+          li.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.href = "pdfs/" + file;
+            link.download = file;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+          fileList.appendChild(li);
+        });
+      } else {
+        message.textContent = "비밀번호가 틀렸습니다.";
+      }
     });
   </script>
 </body>
 </html>
-
-
-
